@@ -1,0 +1,43 @@
+{
+  "name": {
+    "en": "FanCoil Thermostat"
+  },
+  "class": "thermostat",
+  "capabilities": [
+    "onoff",
+    "measure_temperature",
+    "target_temperature",
+    "thermostat_mode",
+    "fan_speed"
+  ],
+  "images": {
+    "large": "{{driverAssetsPath}}/images/large.jpg",
+    "small": "{{driverAssetsPath}}/images/small.jpg"
+  },
+  "zigbee": {
+    "manufacturerName": "_TZE204_mpbki2zm",
+    "productId": [
+      "TS0601"
+    ],
+    "endpoints": {
+      "1": {
+        "clusters": [
+          4,
+          5,
+          61184,
+          0
+        ],
+        "bindings": [
+          25,
+          10
+        ]
+      }
+    },
+    "learnmode": {
+      "image": "/drivers/my_driver/assets/icon.svg",
+      "instruction": {
+        "en": "Press the arrow down button for 8s when the fan coil thermostat is off."
+      }
+    }
+  }
+}
