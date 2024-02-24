@@ -1,0 +1,23 @@
+{
+    "title": {
+        "en": "Valve status"
+    },
+    "getable": true,
+    "type": "enum",
+    "uiComponent": "sensor",
+    "values": [
+        {
+            "id": "open",
+            "title": {
+                "en": "Open"
+            }
+        },
+        {
+            "id": "closed",
+            "title": {
+                "en": "Closed"
+            }
+        }
+    ],
+    "insights": true
+}

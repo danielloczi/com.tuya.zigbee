@@ -1,1 +1,15 @@
-[]
+[
+    {
+        "id": "temperatureCalibration",
+        "type": "number",
+        "label": {
+            "en": "Temperature Calibration"
+        },
+        "value": 0,
+        "min": -20,
+        "max": 20,
+        "units": {
+            "en": "Celsius"
+        }
+    }
+]
