@@ -31,5 +31,6 @@
                 "en": "|||"
             }
         }
-    ]
+    ],
+    "icon": "/drivers/fancoil/assets/fan_speed.svg"
 }

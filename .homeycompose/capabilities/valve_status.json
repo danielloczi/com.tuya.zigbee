@@ -19,5 +19,6 @@
             }
         }
     ],
-    "insights": true
+    "insights": true,
+    "icon": "/drivers/fancoil/assets/valve_status.svg"
 }
