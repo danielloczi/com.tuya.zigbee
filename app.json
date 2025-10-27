@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "com.tuya.zigbee",
-  "version": "0.2.19",
+  "version": "0.2.20",
   "compatibility": ">=5.0.0",
   "platforms": [
     "local"
@@ -94,6 +94,10 @@
       {
         "name": "Jurgen Heine",
         "email": "jurgen2.heine@gmail.com"
+      },
+      {
+        "name": "Morris Haid",
+        "email": "mhaid2016@outlook.com"
       }
     ]
   },
@@ -325,20 +329,6 @@
         "title": {
           "en": "Close",
           "de": "Schließen"
-        },
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=curtain_module"
-          }
-        ]
-      },
-      {
-        "id": "move_stop",
-        "title": {
-          "en": "Stop",
-          "de": "Stoppen"
         },
         "args": [
           {
@@ -1844,7 +1834,8 @@
           "TUYATEC-7qunn4gq",
           "_TZ3000_decxrtwa",
           "_TZ3000_yxqnffam",
-          "_TZ3000_9eeavbk5"
+          "_TZ3000_9eeavbk5",
+          "_TZ3000_yxqnffam"
         ],
         "productId": [
           "RH3001",
@@ -2168,6 +2159,67 @@
             "step": 1,
             "min": 10,
             "max": 86400
+          }
+        }
+      ]
+    },
+    {
+      "name": {
+        "en": "FanCoil Thermostat"
+      },
+      "class": "thermostat",
+      "capabilities": [
+        "onoff",
+        "measure_temperature",
+        "target_temperature",
+        "thermostat_mode",
+        "fan_mode",
+        "valve_status",
+        "fan_speed"
+      ],
+      "images": {
+        "large": "/drivers/fancoil/assets/images/large.jpg",
+        "small": "/drivers/fancoil/assets/images/small.jpg"
+      },
+      "zigbee": {
+        "manufacturerName": "_TZE204_mpbki2zm",
+        "productId": [
+          "TS0601"
+        ],
+        "endpoints": {
+          "1": {
+            "clusters": [
+              4,
+              5,
+              61184,
+              0
+            ],
+            "bindings": [
+              25,
+              10
+            ]
+          }
+        },
+        "learnmode": {
+          "image": "/drivers/my_driver/assets/icon.svg",
+          "instruction": {
+            "en": "Press the arrow down button for 8s when the fan coil thermostat is off."
+          }
+        }
+      },
+      "id": "fancoil",
+      "settings": [
+        {
+          "id": "temperatureCalibration",
+          "type": "number",
+          "label": {
+            "en": "Temperature Calibration"
+          },
+          "value": 0,
+          "min": -20,
+          "max": 20,
+          "units": {
+            "en": "Celsius"
           }
         }
       ]
@@ -3218,6 +3270,21 @@
           "value": 7,
           "min": 0,
           "max": 1500,
+          "units": {
+            "en": "seconds",
+            "nl": "seconden"
+          }
+        },
+        {
+          "id": "distance_update_interval",
+          "type": "number",
+          "label": {
+            "en": "Distance update interval",
+            "nl": "Afstand update interval"
+          },
+          "value": 10,
+          "min": 3,
+          "max": 60,
           "units": {
             "en": "seconds",
             "nl": "seconden"
@@ -8266,6 +8333,77 @@
       "getable": true,
       "setable": false
     },
+    "fan_mode": {
+      "title": {
+        "en": "Fan mode"
+      },
+      "getable": true,
+      "setable": true,
+      "type": "enum",
+      "uiComponent": "picker",
+      "values": [
+        {
+          "id": "auto",
+          "title": {
+            "en": "Auto"
+          }
+        },
+        {
+          "id": "low",
+          "title": {
+            "en": "Low speed"
+          }
+        },
+        {
+          "id": "medium",
+          "title": {
+            "en": "Medium speed"
+          }
+        },
+        {
+          "id": "high",
+          "title": {
+            "en": "High speed"
+          }
+        }
+      ]
+    },
+    "fan_speed": {
+      "title": {
+        "en": "Fan speed"
+      },
+      "getable": true,
+      "type": "enum",
+      "uiComponent": "sensor",
+      "insights": true,
+      "values": [
+        {
+          "id": "off",
+          "title": {
+            "en": "-"
+          }
+        },
+        {
+          "id": "low",
+          "title": {
+            "en": "|"
+          }
+        },
+        {
+          "id": "medium",
+          "title": {
+            "en": "||"
+          }
+        },
+        {
+          "id": "high",
+          "title": {
+            "en": "|||"
+          }
+        }
+      ],
+      "icon": "/drivers/fancoil/assets/fan_speed.svg"
+    },
     "lidl_xmas_mode": {
       "title": {
         "en": "Mode"
@@ -8330,12 +8468,13 @@
       "title": {
         "en": "Target distance"
       },
-      "uiComponent": null,
+      "uiComponent": "sensor",
       "getable": true,
       "setable": false,
       "units": {
         "en": "m"
-      }
+      },
+      "icon": "/drivers/radar_sensor/assets/distance.svg"
     },
     "temperature_unit": {
       "type": "enum",
@@ -8362,6 +8501,30 @@
       "getable": true,
       "setable": true,
       "capabilitiesOptions": {}
+    },
+    "valve_status": {
+      "title": {
+        "en": "Valve status"
+      },
+      "getable": true,
+      "type": "enum",
+      "uiComponent": "sensor",
+      "values": [
+        {
+          "id": "open",
+          "title": {
+            "en": "Open"
+          }
+        },
+        {
+          "id": "closed",
+          "title": {
+            "en": "Closed"
+          }
+        }
+      ],
+      "insights": true,
+      "icon": "/drivers/fancoil/assets/valve_status.svg"
     }
   }
 }
