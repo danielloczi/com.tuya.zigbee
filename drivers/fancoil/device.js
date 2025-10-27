@@ -107,8 +107,9 @@ class FanCoilThermostatDevice extends TuyaSpecificClusterDevice {
         });
 
         this.registerCapabilityListener('onoff', async (onOff) => {
-            //  await this.writeBool(THERMOSTAT_DATA_POINTS.onOff, onOff)
+            await this.writeBool(THERMOSTAT_DATA_POINTS.onOff, onOff)
             this.log('device on/off set', onOff);
+            await this.updateTemperatureCalibration(undefined, onOff); // to adjust calibration when turning on/off
         });
 
         this.registerCapabilityListener('measure_temperature', async (currentTemperature) => {
@@ -148,8 +149,21 @@ class FanCoilThermostatDevice extends TuyaSpecificClusterDevice {
 
         const newTemperatureCalibration = newSettings.temperatureCalibration;
         if (changedKeys.includes('temperatureCalibration')) {
-            await this.writeInt32(THERMOSTAT_DATA_POINTS.temperatureCalibration, newTemperatureCalibration);
+            await this.updateTemperatureCalibration(newTemperatureCalibration, undefined);
         }
+    }
+
+    async updateTemperatureCalibration(newTemperatureCalibrationValue, newOnOffValue) {
+        let temperatureCalibration = newTemperatureCalibrationValue || this.getSetting('temperatureCalibration') || 0;
+        this.log('>>>>> CURRENT temperature calibration value:', temperatureCalibration);
+        const onOff = newOnOffValue ?? await this.getCapabilityValue('onoff');
+        this.log('>>>>> OnOff value:', onOff);
+        if (!onOff) {
+            this.log('Device is off, modify temperature calibration with +2 degrees');
+            temperatureCalibration += 2;
+        }
+        await this.writeInt32(THERMOSTAT_DATA_POINTS.temperatureCalibration, temperatureCalibration);
+        this.log('Temperature calibration updated to', temperatureCalibration);
     }
 
     async processResponse(data) {
