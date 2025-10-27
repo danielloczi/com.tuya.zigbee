@@ -102,7 +102,7 @@ class FanCoilThermostatDevice extends TuyaSpecificClusterDevice {
         await zclNode.endpoints[1].clusters.basic.readAttributes('manufacturerName', 'zclVersion', 'appVersion', 'modelId', 'powerSource', 'attributeReportingStatus')
 
         this.registerCapabilityListener('target_temperature', async (targetTemperature) => {
-            await this.writeData32(THERMOSTAT_DATA_POINTS.targetTemperature, targetTemperature * 10);
+            await this.writeInt32(THERMOSTAT_DATA_POINTS.targetTemperature, targetTemperature * 10);
             this.log('Target temperature set', targetTemperature);
         });
 
@@ -148,7 +148,7 @@ class FanCoilThermostatDevice extends TuyaSpecificClusterDevice {
 
         const newTemperatureCalibration = newSettings.temperatureCalibration;
         if (changedKeys.includes('temperatureCalibration')) {
-            await this.writeData32(THERMOSTAT_DATA_POINTS.temperatureCalibration, newTemperatureCalibration);
+            await this.writeInt32(THERMOSTAT_DATA_POINTS.temperatureCalibration, newTemperatureCalibration);
         }
     }
 
