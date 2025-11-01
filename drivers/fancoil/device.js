@@ -160,7 +160,7 @@ class FanCoilThermostatDevice extends TuyaSpecificClusterDevice {
         this.log('>>>>> OnOff value:', onOff);
         if (!onOff) {
             this.log('Device is off, modify temperature calibration with +2 degrees');
-            temperatureCalibration += 2;
+            temperatureCalibration += 2;    // this should be 3 celsius
         }
         await this.writeInt32(THERMOSTAT_DATA_POINTS.temperatureCalibration, temperatureCalibration);
         this.log('Temperature calibration updated to', temperatureCalibration);
@@ -226,6 +226,8 @@ class FanCoilThermostatDevice extends TuyaSpecificClusterDevice {
                 } catch (e) {
                     this.log("Failed to forward on/off to app", e);
                 }
+
+                await this.updateTemperatureCalibration(undefined, parsedValue);
 
                 break;
 
